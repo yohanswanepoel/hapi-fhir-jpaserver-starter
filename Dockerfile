@@ -25,7 +25,7 @@ RUN rm -rf /opt/bitnami/tomcat/webapps/ROOT && \
     chmod 775 /opt/bitnami/hapi/data/hapi/lucenefiles
 
 USER root
-RUN mkdir -p /target && chown -R 1001:1001 target
+RUN mkdir -p /target && chown -R 1001:0 target
 USER 1001
 
 COPY --chown=1001:0 catalina.properties /opt/bitnami/tomcat/conf/catalina.properties
