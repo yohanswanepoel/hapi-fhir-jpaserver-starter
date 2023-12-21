@@ -28,10 +28,10 @@ USER root
 RUN mkdir -p /target && chown -R 1001:1001 target
 USER 1001
 
-COPY --chown=1001:1001 catalina.properties /opt/bitnami/tomcat/conf/catalina.properties
-COPY --chown=1001:1001 server.xml /opt/bitnami/tomcat/conf/server.xml
-COPY --from=build-hapi --chown=1001:1001 /tmp/hapi-fhir-jpaserver-starter/target/ROOT.war /opt/bitnami/tomcat/webapps/ROOT.war
-COPY --from=build-hapi --chown=1001:1001 /tmp/hapi-fhir-jpaserver-starter/opentelemetry-javaagent.jar /app
+COPY --chown=1001:0 catalina.properties /opt/bitnami/tomcat/conf/catalina.properties
+COPY --chown=1001:0 server.xml /opt/bitnami/tomcat/conf/server.xml
+COPY --from=build-hapi --chown=1001:0 /tmp/hapi-fhir-jpaserver-starter/target/ROOT.war /opt/bitnami/tomcat/webapps/ROOT.war
+COPY --from=build-hapi --chown=1001:0 /tmp/hapi-fhir-jpaserver-starter/opentelemetry-javaagent.jar /app
 
 ENV ALLOW_EMPTY_PASSWORD=yes
 
@@ -40,10 +40,14 @@ FROM gcr.io/distroless/java17-debian11:nonroot AS default
 # 65532 is the nonroot user's uid
 # used here instead of the name to allow Kubernetes to easily detect that the container
 # is running as a non-root (uid != 0) user.
-USER 65532:65532
+USER 1001:1001
 WORKDIR /app
 
 COPY --chown=nonroot:nonroot --from=build-distroless /app /app
 COPY --chown=nonroot:nonroot --from=build-hapi /tmp/hapi-fhir-jpaserver-starter/opentelemetry-javaagent.jar /app
+RUN chown -R 0 /app && \
+    chmod -R g=u /app
+RUN chown -R 0 /tmp/hapi-fhir-jpaserver-starter/opentelemetry-javaagent.jar \
+    chmod -R g=u /tmp/hapi-fhir-jpaserver-starter/opentelemetry-javaagent.jar
 
 ENTRYPOINT ["java", "--class-path", "/app/main.war", "-Dloader.path=main.war!/WEB-INF/classes/,main.war!/WEB-INF/,/app/extra-classes", "org.springframework.boot.loader.PropertiesLauncher"]
