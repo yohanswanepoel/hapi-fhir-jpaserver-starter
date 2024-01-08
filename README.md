@@ -70,7 +70,7 @@ version: '3.7'
 services:
   fhir:
     container_name: fhir
-    image: "hapiproject/hapi:latest"
+    image: "quay.io/jswanepo/hapi-js"
     ports:
       - "8080:8080"
     configs:
