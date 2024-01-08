@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-fhir
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-fhir
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-fhir
+    spec:
+      containers:
+        - name: {{ .Release.Name }}-fhir
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: profiles_active
+              value: r4
+            - name: spring_datasource_url
+              value: "jdbc:postgresql://{{ .Release.Name }}-db-service:5432/{{ .Values.connection.db_name }}"
+            - name: spring_datasource_username
+              value: {{ .Values.connection.db_user }}
+            - name: spring_datasource_password
+              value: {{ .Values.connection.db_password }}
+            - name: spring_datasource_driverClassName
+              value: org.postgresql.Driver
+            - name: spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation
+              value: "true"
+            - name: spring.jpa.properties.hibernate.dialect
+              value: "ca.uhn.fhir.jpa.model.dialect.HapiFhirPostgres94Dialect"
+            - name: spring.jpa.properties.search.enabled
+              value: "false"

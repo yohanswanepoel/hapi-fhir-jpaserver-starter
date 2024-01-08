@@ -1,0 +1,14 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ .Release.Name }}-fhir-route
+spec:
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-fhir-service
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: {{ .Values.route.edge }}

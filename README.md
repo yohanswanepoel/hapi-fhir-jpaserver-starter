@@ -6,7 +6,17 @@
 * Build the image file and push to a repo then do podman or docker run as per the instructions below
 * to run on OpenShift use the app.yml file as a started in k8s/app.yml (customise to point to your image)
 
+* Custom Healm chart under helm/charts (original under charts-non-ocp, needs to be updated)
 
+
+**Or use HELM:**
+```bash
+cd helm
+helm install myserver . 
+
+# Or to upgrade helm upgrade myserver .
+
+```
 ## Original Project document after this
 
 
