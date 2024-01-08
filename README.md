@@ -2,6 +2,12 @@
 
 ## This version works on OpenShift with an alterted dockerfile
 
+To run it:
+* Build the image file and push to a repo then do podman or docker run as per the instructions below
+* to run on OpenShift use the app.yml file as a started in k8s/app.yml (customise to point to your image)
+
+
+###
 
 
 This project is a complete starter project you can use to deploy a FHIR server using HAPI FHIR JPA.
