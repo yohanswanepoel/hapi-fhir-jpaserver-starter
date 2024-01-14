@@ -17,6 +17,13 @@ helm install myserver .
 # Or to upgrade helm upgrade myserver .
 
 ```
+
+**create helm chart
+```bash
+helm package ./helm 
+helm push fhir-server-0.1.0.tgz oci://[registry]/[org]/hapi-helm
+```
+
 ## Original Project document after this
 
 

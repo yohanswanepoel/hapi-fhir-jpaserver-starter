@@ -5,6 +5,8 @@ target/
 # Compiled class file
 *.class
 
+*.tgz
+
 # Log file
 *.log
 
