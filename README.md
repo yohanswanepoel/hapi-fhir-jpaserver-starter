@@ -20,7 +20,7 @@ helm install myserver .
 
 **create helm chart
 ```bash
-helm package ./helm 
+helm package ./helm -d docs
 helm push fhir-server-0.1.0.tgz oci://[registry]/[org]/hapi-helm
 ```
 
