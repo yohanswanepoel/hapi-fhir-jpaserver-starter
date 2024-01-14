@@ -18,10 +18,22 @@ helm install myserver .
 
 ```
 
+To use GitHub pages:
+
+* Setup github pages to publish docs folder as github pages (you can use a different name, just substitue later)
+* Package the helm repo as .tgz (using helm package): helm package charts/mychart -d docs/. Substitute charts/mychart with a path to a chart root folder
+* Include an index.yaml -- an index file for the repository helm repo index ./docs --url https://<YOUR_ORG_OR_USERNAME>.github.io/<REPO_NAME>
+* Now you can add the repo: helm repo add <INTERNAL_NAME> https://<YOUR_ORG_OR_USERNAME>.github.io/<REPO_NAME>
+
+https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site 
+
+
 **create helm chart
 ```bash
 helm package ./helm -d docs
-helm push fhir-server-0.1.0.tgz oci://[registry]/[org]/hapi-helm
+helm repo index ./docs --url https://yohanswanepoel.github.io/hapi-fhir-jpaserver-starter
+helm repo add https://yohanswanepoel.github.io/hapi-fhir-jpaserver-starter
+# helm push fhir-server-0.1.0.tgz oci://[registry]/[org]/hapi-helm
 ```
 
 ## Original Project document after this
