@@ -2,13 +2,27 @@
 
 ## This version works on OpenShift with an alterted dockerfile
 
-**To run it:**
+**To run it on OpenShift:**
 * Build the image file and push to a repo then do podman or docker run as per the instructions below
 * to run on OpenShift use the app.yml file as a started in k8s/app.yml (customise to point to your image)
 
-* Custom Healm chart under helm/charts (original under charts-non-ocp, needs to be updated)
+* Easiest alternatively install the helm chart: https://yohanswanepoel.github.io/hapi-fhir-jpaserver-starter
 
 
+**Run locally using podman or docker**
+
+* podman
+```bash
+podman run -p 8090:8080 quay.io/jswanepo/hapi-js 
+```
+
+* docker
+```bash
+docker run -p 8090:8080 quay.io/jswanepo/hapi-js 
+```
+
+
+# Building HELM
 **Or use HELM:**
 ```bash
 cd helm
@@ -33,11 +47,13 @@ https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a
 helm package ./helm -d docs
 helm repo index ./docs --url https://yohanswanepoel.github.io/hapi-fhir-jpaserver-starter
 helm repo add https://yohanswanepoel.github.io/hapi-fhir-jpaserver-starter
+helm creat
 # helm push fhir-server-0.1.0.tgz oci://[registry]/[org]/hapi-helm
 ```
 
+## ------------------------------------------------------------------------------------------------------------
 ## Original Project document after this
-
+## ------------------------------------------------------------------------------------------------------------
 
 This project is a complete starter project you can use to deploy a FHIR server using HAPI FHIR JPA.
 
