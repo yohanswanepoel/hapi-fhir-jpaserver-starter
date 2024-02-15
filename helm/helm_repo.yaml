@@ -1,0 +1,8 @@
+apiVersion: helm.openshift.io/v1beta1
+kind: HelmChartRepository
+metadata:
+  name: digital-health
+spec:
+  connectionConfig:
+    url: 'https://yohanswanepoel.github.io/hapi-fhir-jpaserver-starter'
+  name: Digital Health Server Repository
